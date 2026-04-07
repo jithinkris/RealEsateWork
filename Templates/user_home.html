@@ -1,0 +1,307 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Home | Legaspace</title>
+
+    <style>
+        :root {
+            --primary: #0d1b2a;
+            --secondary: #1b263b;
+            --accent: #fca311;
+            --white: #ffffff;
+            --bg: #f4f7f9;
+            --text-main: #1a1a1a;
+            --text-muted: #777;
+            --glass: rgba(255, 255, 255, 0.15);
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        body { background: var(--bg); color: var(--text-main); overflow-x: hidden; }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background: var(--primary);
+            padding: 0.8rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0; z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 55px;
+            width: auto;
+            filter: drop-shadow(0 0 8px rgba(252, 163, 17, 0.3));
+        }
+
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { color: var(--white); text-decoration: none; font-weight: 500; font-size: 0.95rem; opacity: 0.9; }
+        .nav-links a:hover { color: var(--accent); opacity: 1; }
+        
+        .logout-btn { 
+            background: var(--glass); 
+            padding: 10px 22px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            background: linear-gradient(rgba(13, 27, 42, 0.8), rgba(13, 27, 42, 0.8)), 
+                        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000') center/cover;
+            padding: 120px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h2 { font-size: 3rem; margin-bottom: 15px; font-weight: 800; letter-spacing: -0.5px; }
+        .hero p { opacity: 0.8; margin-bottom: 40px; font-size: 1.2rem; font-weight: 300; }
+
+        .search-box form {
+            display: flex;
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--glass);
+            padding: 10px;
+            border-radius: 100px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 100px;
+            outline: none;
+            font-size: 1.1rem;
+            background: white;
+        }
+
+        .search-box button {
+            background: var(--accent);
+            border: none;
+            color: var(--primary);
+            padding: 0 35px;
+            margin-left: 10px;
+            border-radius: 100px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* --- PROPERTIES --- */
+        .container { max-width: 1300px; margin: 60px auto; padding: 0 40px; }
+        .properties { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 35px; }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(0,0,0,0.12); }
+
+        .card-img-wrapper { height: 240px; position: relative; }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .price-badge {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .card-body { padding: 25px; }
+        .card-body h3 { font-size: 1.4rem; margin-bottom: 8px; color: var(--primary); font-weight: 700; }
+        .loc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; display: block; }
+
+        .specs { display: flex; justify-content: space-between; padding: 15px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-bottom: 20px; color: #555; font-size: 0.9rem; }
+
+        .btn-view {
+            display: block;
+            text-align: center;
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-view:hover { background: var(--secondary); letter-spacing: 0.5px; }
+
+        /* --- MODAL --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(13, 27, 42, 0.85);
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: white;
+            width: 95%;
+            max-width: 550px;
+            margin: 8vh auto;
+            padding: 45px;
+            border-radius: 30px;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .close { position: absolute; right: 30px; top: 25px; font-size: 2rem; cursor: pointer; color: #bbb; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem 5%; }
+            .hero h2 { font-size: 2.2rem; }
+            .search-box form { border-radius: 20px; flex-direction: column; background: transparent; box-shadow: none; padding: 0; }
+            .search-box input { margin-bottom: 10px; border-radius: 15px; width: 100%; }
+            .search-box button { height: 55px; width: 100%; margin-left: 0; border-radius: 15px; }
+            .container { padding: 0 20px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="{% url 'user_home' %}" class="brand-logo">
+        <img src="{% static 'logo1.png' %}" alt="Legaspace" class="logo-img">
+    </a>
+    <div class="nav-links">
+        <a href="{% url 'user_home' %}">Home</a>
+        <a href="{% url 'user_contact' %}">Contact</a>
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    </div>
+</nav>
+
+<div class="hero">
+    <h2>Welcome back, {{ request.session.user_name|default:"Investor" }}</h2>
+    <p>Exclusive premium listings tailored for your lifestyle.</p>
+    
+    <div class="search-box">
+        <form method="GET">
+            <input type="text" name="q" placeholder="Where would you like to live?">
+            <button type="submit">Find Properties</button>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    <div class="properties">
+        {% for property in properties %}
+        <div class="card">
+            <div class="card-img-wrapper">
+                {% if property.images.all %}
+                    <img src="{{ property.images.all.0.image.url }}" alt="{{ property.title }}">
+                {% else %}
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1000" alt="Listing">
+                {% endif %}
+                <div class="price-badge">
+                    {% if property.price %}₹ {{ property.price }}{% else %}Price on Request{% endif %}
+                </div>
+            </div>
+
+            <div class="card-body">
+                <h3>{{ property.title }}</h3>
+                <span class="loc">📍 {{ property.location }}</span>
+
+                <div class="specs">
+                    {% if property.bedrooms %}<span>🛏 {{ property.bedrooms }} Beds</span>{% endif %}
+                    {% if property.bathrooms %}<span>🚿 {{ property.bathrooms }} Baths</span>{% endif %}
+                    {% if property.area %}<span>📐 {{ property.area }} sqft</span>{% endif %}
+                </div>
+
+                <div class="btn-view" 
+                     onclick="openModal('{{ property.id }}', '{{ property.title|escapejs }}', '{{ property.location|escapejs }}', '{{ property.price }}', '{{ property.description|escapejs }}')">
+                    Explore Details
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1/-1; text-align: center; padding: 100px 0;">
+            <p style="color: #999; font-size: 1.2rem;">We couldn't find any properties matching that search.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="modal" id="propertyModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <p id="modalLocation" style="color: var(--accent); font-weight: 700; margin: 10px 0;"></p>
+        <p id="modalPrice" style="font-size: 1.5rem; font-weight: 800; color: #2ecc71;"></p>
+        <div id="modalDesc" style="font-size: 1rem; line-height: 1.6; margin: 20px 0; color: #444; max-height: 150px; overflow-y: auto;"></div>
+
+        <div style="margin-top: 30px; padding-top: 25px; border-top: 2px dashed #eee;">
+            <h3 style="margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">Request a Private Tour</h3>
+            <form method="POST" action="/submit-requirement/">
+                {% csrf_token %}
+                <input type="hidden" name="property_id" id="propertyId">
+                <div style="display: grid; gap: 15px;">
+                    <input type="text" name="name" placeholder="Your Full Name" style="width:100%; padding:15px; border-radius:12px; border:1px solid #ddd;" required>
+                    <input type="text" name="phone" placeholder="Mobile Number" style="width:100%; padding:15px; border-radius:12px; border:1px solid #ddd;" required>
+                    <textarea name="message" rows="3" placeholder="Additional requirements..." style="width:100%; padding:15px; border-radius:12px; border:1px solid #ddd;"></textarea>
+                    <button type="submit" style="background:var(--accent); color:var(--primary); padding:18px; border:none; border-radius:12px; font-weight:800; cursor:pointer; text-transform:uppercase;">Submit Inquiry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(id, title, location, price, description) {
+        document.getElementById("propertyModal").style.display = "block";
+        document.getElementById("modalTitle").innerText = title;
+        document.getElementById("modalLocation").innerText = "📍 " + location;
+        document.getElementById("modalPrice").innerText = "₹ " + (price || "On Request");
+        document.getElementById("modalDesc").innerText = description || "No additional description provided.";
+        document.getElementById("propertyId").value = id;
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById("propertyModal").style.display = "none";
+        document.body.style.overflow = 'auto';
+    }
+
+    window.onclick = function(event) {
+        let modal = document.getElementById("propertyModal");
+        if (event.target == modal) closeModal();
+    }
+</script>
+
+</body>
+</html>

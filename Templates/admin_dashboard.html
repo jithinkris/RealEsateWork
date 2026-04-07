@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Legaspace</title>
+
+    <style>
+        :root {
+            --primary: #0d1b2a;
+            --secondary: #1b263b;
+            --accent: #fca311;
+            --bg: #f8f9fa;
+            --white: #ffffff;
+            --text-muted: #6c757d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 250px;
+            background: var(--primary);
+            color: white;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 40px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 12px 15px;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 40px;
+        }
+
+        /* --- NAVBAR --- */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .top-nav h1 { font-size: 1.8rem; color: var(--primary); }
+
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        /* --- STATS --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent);
+        }
+
+        .stat-card h3 { font-size: 2rem; color: var(--primary); }
+        .stat-card p { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- SEARCH & TABLE --- */
+        .table-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 300px;
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: #f8f9fa;
+            color: var(--primary);
+            font-weight: 700;
+            border-bottom: 2px solid #eee;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
+        tr:hover { background: #fdfdfd; }
+
+        /* --- STATUS STYLES --- */
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-waiting { background: #fff4e5; color: #d47e00; }
+        .status-contacted { background: #e3f2fd; color: #1976d2; }
+        .status-closed { background: #e8f5e9; color: #2e7d32; }
+
+        .update-form select {
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 0.85rem;
+        }
+
+        .update-form button {
+            padding: 6px 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { width: 80px; }
+            .sidebar h2, .nav-link span { display: none; }
+            .main-content { margin-left: 80px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+    <h2>LEGASPACE</h2>
+
+    <!-- Dashboard -->
+    <a href="/admin/dashboard/" class="nav-link active">🏠 Dashboard</a>
+
+    <!-- Properties -->
+    <a href="/admin/properties/" class="nav-link">🏢 Properties</a>
+
+    <!-- Add Property -->
+    <a href="/admin/add-property/" class="nav-link">➕ Add Property</a>
+
+    <!-- All Leads -->
+    <a href="{% url 'sales' %}" class="nav-link">💰 Sold Properties</a>
+    <a href="{% url 'installments' %}" class="nav-link">📊 Installments</a>
+    <!-- Optional -->
+    <a href="/admin/profile/" class="nav-link">⚙️ Settings</a>
+</aside>
+<main class="main-content">
+    <header class="top-nav">
+        <h1>Overview</h1>
+        <div class="user-info">
+            <span>Admin: <strong>{{ request.session.admin_name }}</strong></span>
+            <a href="/admin/logout/" class="logout-btn">Logout</a>
+        </div>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>{{ total }}</h3>
+            <p>TOTAL LEADS</p>
+        </div>
+        <div class="stat-card" style="border-color: #fca311;">
+            <h3>{{ waiting }}</h3>
+            <p>WAITING</p>
+        </div>
+        <div class="stat-card" style="border-color: #3498db;">
+            <h3>{{ contacted }}</h3>
+            <p>CONTACTED</p>
+        </div>
+        <div class="stat-card" style="border-color: #2ecc71;">
+            <h3>{{ closed }}</h3>
+            <p>CLOSED</p>
+        </div>
+    </div>
+
+    <div class="table-section">
+        <div class="table-header">
+            <h3>Recent Inquiries</h3>
+            <form method="GET" class="search-box">
+                <input type="text" name="q" placeholder="Search leads...">
+            </form>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Contact</th>
+                    <th>Property Type</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in contacts %}
+                <tr>
+                    <td><strong>{{ c.name }}</strong></td>
+                    <td>{{ c.phone }}</td>
+                    <td>{{ c.requirement_type }}</td>
+                    <td>{{ c.preferred_location }}</td>
+                    <td>
+                        <span class="badge status-{{ c.status }}">{{ c.status }}</span>
+                    </td>
+                    <td>
+                        <form method="POST" action="/admin/update-status/{{ c.id }}/" class="update-form">
+                            {% csrf_token %}
+                            <select name="status">
+                                <option value="waiting" {% if c.status == 'waiting' %}selected{% endif %}>Waiting</option>
+                                <option value="contacted" {% if c.status == 'contacted' %}selected{% endif %}>Contacted</option>
+                                <option value="closed" {% if c.status == 'closed' %}selected{% endif %}>Closed</option>
+                            </select>
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+</body>
+</html>

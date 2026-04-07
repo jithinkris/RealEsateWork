@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sold Property</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --input-bg: #fdfdfd;
+            --border-color: #dcdde1;
+            --bg-color: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-card {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #57606f;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--primary-color);
+            box-sizing: border-box; /* Ensures padding doesn't break width */
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            background-color: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .helper-text {
+            font-size: 11px;
+            color: #a4b0be;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-card">
+    <h2>Record New Sale</h2>
+
+    {% if error %}
+        <p style="color: #c0392b; margin-bottom: 18px; font-weight: 600;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="property">Select Property</label>
+            <select name="property" id="property">
+                <option value="" disabled selected>Choose a property...</option>
+                {% for p in properties %}
+                    <option value="{{ p.id }}">{{ p.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="buyer">Buyer</label>
+            <select name="buyer" id="buyer">
+                <option value="" selected>Choose existing buyer or select other</option>
+                {% for u in users %}
+                    <option value="{{ u.id }}">{{ u.name }}</option>
+                {% endfor %}
+                <option value="other">Unregistered buyer</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="buyer_name">Buyer Name (for unregistered buyers)</label>
+            <input type="text" name="buyer_name" id="buyer_name" placeholder="Enter buyer name manually">
+            <p class="helper-text">Leave this blank if you selected an existing registered buyer.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="total_price">Total Sale Price (₹)</label>
+            <input type="number" name="total_price" id="total_price" placeholder="e.g. 5000000">
+        </div>
+
+        <div class="form-group">
+            <label for="advance_paid">Advance Amount (₹)</label>
+            <input type="number" name="advance_paid" id="advance_paid" placeholder="e.g. 500000">
+            <p class="helper-text">Enter the initial booking amount paid by the buyer.</p>
+        </div>
+
+        <button type="submit">Complete Sale</button>
+    </form>
+</div>
+
+</body>
+</html>

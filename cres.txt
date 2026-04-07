@@ -1,0 +1,12 @@
+Admin Cred  
+
+  name="Super Admin",
+    email="legaspace192620@gmail.com",
+    password=make_password("admin123")
+
+
+Super Admin (Django Admin)
+
+username - LegaSpace
+password - Leg@Space@123
+email - Leg@Space@123

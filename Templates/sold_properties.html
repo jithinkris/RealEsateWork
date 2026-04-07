@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sold Properties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .page-actions {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 11px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-action.primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-action.secondary {
+            background-color: white;
+            color: var(--accent-color);
+            border: 1px solid rgba(52, 152, 219, 0.25);
+        }
+
+        .btn-action:hover {
+            transform: translateY(-1px);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-weight: 600;
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background-color: #fcfcfc;
+        }
+
+        .price {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .remaining {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+
+        .btn-view {
+            text-decoration: none;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-view:hover {
+            background-color: #2980b9;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            th, td { padding: 10px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+<div class="page-actions">
+    <a href="/admin/dashboard/" class="btn-action secondary">← Back to Dashboard</a>
+    <a href="/admin/add-sale/" class="btn-action primary">+ Add Sale</a>
+</div>
+<div class="container">
+    <h2>Sold Properties</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Buyer</th>
+                <th>Total Price</th>
+                <th>Remaining</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in sales %}
+            <tr>
+                <td style="font-weight: 500;">{{ s.property.title }}</td>
+                <td>{% if s.buyer %}{{ s.buyer.name }}{% else %}{{ s.buyer_name }}{% endif %}</td>
+                <td class="price">₹ {{ s.total_price }}</td>
+                <td class="remaining">₹ {{ s.remaining_amount }}</td>
+                <td>
+                    <a href="{% url 'sale_detail' s.id %}" class="btn-view">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

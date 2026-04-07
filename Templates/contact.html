@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Legaspace Premium Real Estate</title>
+
+    <style>
+        :root {
+            --primary: #0d1b2a;
+            --secondary: #1b263b;
+            --accent: #fca311;
+            --text-muted: #666;
+            --bg-light: #f4f7f6;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background: var(--primary);
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .logo-img {
+            height: 50px;
+            filter: brightness(1.1);
+        }
+
+        .nav-links a {
+            color: white;
+            margin-left: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- CONTACT SECTION --- */
+        .section {
+            padding: 60px 10%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 800;
+        }
+        
+        .section .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+        }
+
+        /* --- INFO SIDE --- */
+        .info-box {
+            background: var(--primary);
+            color: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-box h3 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--accent);
+        }
+
+        .info-item {
+            margin-bottom: 30px;
+        }
+
+        .info-text strong {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #88929b;
+            margin-bottom: 5px;
+        }
+
+        .info-text p { font-size: 1.05rem; opacity: 0.9; }
+        .info-text a { color: var(--accent); text-decoration: none; }
+
+        /* --- FORM SIDE --- */
+        .form-box { padding: 60px 50px; }
+        .form-box h3 { font-size: 1.8rem; margin-bottom: 30px; font-weight: 700; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-box input, .form-box textarea {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #fdfdfd;
+        }
+
+        .form-box button {
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            padding: 18px;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .form-box button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(252, 163, 17, 0.3);
+        }
+
+        .trust-badges {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .footer {
+            background: #04090f;
+            color: #555;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        @media (max-width: 992px) {
+            .contact-container { grid-template-columns: 1fr; }
+            .section { padding: 40px 5%; }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="/" class="brand">
+        <img src="{% static 'logo1.png' %}" alt="Legaspace" class="logo-img">
+    </a>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/register/">Register</a>
+        <a href="/login/">Login</a>
+        <a href="/contact/">Contact</a>
+    </div>
+</nav>
+
+<div class="section">
+    <h2>Let’s Connect</h2>
+    <p class="subtitle">Secure your investment with Bengaluru's most transparent real estate team.</p>
+
+    <div class="contact-container">
+
+        <div class="info-box">
+            <h3>Contact Details</h3>
+            
+            <div class="info-item">
+                <div class="info-text">
+                    <strong>Our Office</strong>
+                    <p>#60 Near Venugopala Swamy Temple,<br>2nd Cross, Kyalasanahalli,<br>Bengaluru, KA 560077</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-text">
+                    <strong>General Inquiries</strong>
+                    <p><a href="mailto:legaspace192620@gmail.com">legaspace192620@gmail.com</a></p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-text">
+                    <strong>Direct Lines</strong>
+                    <p>+91 78921 76834 (Parichith)</p>
+                    <p>+91 98451 53958 (Hruthik)</p>
+                    <p>+91 91481 35519 (Chirag)</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <a href="https://www.instagram.com/legaspace" style="color:var(--accent); text-decoration:none; font-weight:bold;">Instagram: @legaspace →</a>
+            </div>
+        </div>
+
+        <div class="form-box">
+            <h3>Personalized Inquiry</h3>
+            <p style="color:#666; margin-bottom: 25px;">Fill out the form below and an expert will get back to you within 24 hours.</p>
+
+{% if messages %}
+    {% for message in messages %}
+        <p style="color:green; font-weight:bold; margin-bottom:15px;">
+            {{ message }}
+        </p>
+    {% endfor %}
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <input type="text" name="name" placeholder="Full Name" required>
+    </div>
+
+    <div class="form-group">
+        <input type="email" name="email" placeholder="Email Address" required>
+    </div>
+
+    <div class="form-group">
+        <input type="text" name="phone" placeholder="Phone Number" required>
+    </div>
+
+    <!-- 🔥 NEW FIELD -->
+    <div class="form-group">
+        <select name="requirement_type" required style="width:100%; padding:16px; border-radius:10px;">
+            <option value="">Select Requirement</option>
+            <option value="apartment">Apartment</option>
+            <option value="villa">Villa</option>
+            <option value="plot">Plot / Land</option>
+            <option value="commercial">Commercial</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <textarea name="message" rows="4" placeholder="How can we help?" required></textarea>
+    </div>
+
+    <button type="submit">Send Message</button>
+</form>
+            <div class="trust-badges">
+                <span>✓ Verified Listings</span>
+                <span>✓ Zero Brokerage*</span>
+                <span>✓ Legal Support</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 Legaspace Premium Real Estate Solutions. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

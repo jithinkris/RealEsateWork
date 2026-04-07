@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Property | Legaspace Admin</title>
+
+    <style>
+        :root {
+            --primary: #0d1b2a;
+            --secondary: #1b263b;
+            --accent: #fca311;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --border: #dcdfe6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--primary);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        header {
+            border-bottom: 2px solid var(--bg);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h2 { font-size: 1.8rem; color: var(--primary); }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- FORM GRID --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full-width { grid-column: span 2; }
+
+        .form-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--secondary);
+            text-transform: uppercase;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            background: #fafafa;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.1);
+        }
+
+        textarea { resize: vertical; min-height: 100px; }
+
+        /* --- CHECKBOX STYLING --- */
+        .checkbox-group {
+            display: flex;
+            gap: 30px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--accent);
+        }
+
+        /* --- FILE INPUT --- */
+        .file-input-wrapper {
+            border: 2px dashed var(--border);
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            background: #fdfdfd;
+        }
+
+        /* --- BUTTON --- */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 27, 42, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <header>
+        <h2>Add New Property</h2>
+        <a href="/admin/dashboard/" class="back-link">&larr; Back to Dashboard</a>
+    </header>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label>Property Title</label>
+                <input type="text" name="title" placeholder="e.g. Luxury 3BHK Apartment in Downtown" required>
+            </div>
+
+            <div class="form-group">
+                <label>Property Type</label>
+                <select name="property_type">
+                    <option value="apartment">Apartment</option>
+                    <option value="villa">Villa</option>
+                    <option value="plot">Plot / Land</option>
+                    <option value="commercial">Commercial</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Price (₹)</label>
+                <input type="number" name="price" placeholder="Enter amount" >
+            </div>
+
+            <div class="form-group full-width">
+                <label>Location</label>
+                <input type="text" name="location" placeholder="e.g. MG Road, Bangalore" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label>Description</label>
+                <textarea name="description" placeholder="Describe the property highlights..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Area (sq ft)</label>
+                <input type="number" name="area" placeholder="1200">
+            </div>
+
+            <div class="form-group">
+                <label>Listing Status</label>
+                <select name="status">
+                    <option value="available">Available</option>
+                    <option value="sold">Sold</option>
+                    <option value="upcoming">Upcoming</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Bedrooms</label>
+                <input type="number" name="bedrooms" placeholder="3">
+            </div>
+
+            <div class="form-group">
+                <label>Bathrooms</label>
+                <input type="number" name="bathrooms" placeholder="2">
+            </div>
+        </div>
+
+        <label>Amenities</label>
+        <div class="checkbox-group">
+            <label class="checkbox-item">
+                <input type="checkbox" name="parking"> Parking Available
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="furnished"> Fully Furnished
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>Property Images (Upload Multiple)</label>
+            <div class="file-input-wrapper">
+                <input type="file" name="images" multiple>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Publish Property</button>
+    </form>
+</div>
+
+</body>
+</html>

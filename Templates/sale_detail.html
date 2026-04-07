@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sale Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-muted: #7f8c8d;
+            --border-color: #eee;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .detail-card {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h2 { margin: 0; font-weight: 600; color: var(--primary-color); }
+        h3 { margin-top: 0; font-weight: 500; font-size: 1.1rem; color: var(--text-muted); }
+
+        /* Property Overview Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px 40px;
+            background-color: #fafbfc;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .info-value.highlight {
+            color: #e74c3c; /* Red for remaining amount */
+            font-weight: 600;
+        }
+
+        /* Table Styling */
+        .table-section {
+            padding: 30px 40px 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            text-align: left;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            padding: 12px 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 30px;
+            font-style: italic;
+        }
+
+        .page-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            color: var(--accent-color);
+            border: 1px solid rgba(52, 152, 219, 0.25);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .btn-action.primary {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-1px);
+            background-color: rgba(52, 152, 219, 0.08);
+        }
+
+        @media (max-width: 600px) {
+            .info-grid { grid-template-columns: 1fr; padding: 20px; }
+            .table-section { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div style="width: 100%; max-width: 800px;">
+    <div class="page-actions">
+        <a href="javascript:history.back()" class="btn-action">← Back to Sales List</a>
+        <a href="/admin/add-installment/{{ sale.id }}/" class="btn-action primary">+ Add Installment</a>
+    </div>
+    <div class="detail-card">
+        <div class="header">
+            <h2>{{ sale.property.title }}</h2>
+            <p style="margin: 5px 0 0; color: var(--text-muted);">Sale Overview</p>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Buyer</span>
+                <span class="info-value">{% if sale.buyer %}{{ sale.buyer.name }}{% else %}{{ sale.buyer_name }}{% endif %}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Total Price</span>
+                <span class="info-value">₹ {{ sale.total_price }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Advance Paid</span>
+                <span class="info-value" style="color: #27ae60;">₹ {{ sale.advance_paid }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Remaining Balance</span>
+                <span class="info-value highlight">₹ {{ sale.remaining_amount }}</span>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <h3>Payment Installments</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Method</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in installments %}
+                    <tr>
+                        <td style="font-weight: 600;">₹ {{ i.amount }}</td>
+                        <td>{{ i.payment_method }}</td>
+                        <td>{{ i.payment_date }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="empty-state">No payment records found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

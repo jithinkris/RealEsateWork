@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile | Legaspace Admin</title>
+
+    <style>
+        :root {
+            --primary: #0d1b2a;
+            --secondary: #1b263b;
+            --accent: #fca311;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --border: #dcdfe6;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .profile-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 { font-size: 1.6rem; color: var(--primary); margin-bottom: 5px; }
+        .subtitle { color: #666; font-size: 0.9rem; }
+
+        /* --- ALERTS --- */
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        .alert-error { background: #fff5f5; color: var(--danger); border: 1px solid #fed7d7; }
+        .alert-success { background: #f0fff4; color: var(--success); border: 1px solid #c6f6d5; }
+
+        /* --- FORM --- */
+        .form-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            background: #fafafa;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.1);
+        }
+
+        .section-divider {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .section-divider h3 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 27, 42, 0.2);
+        }
+
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #888;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .back-home:hover { color: var(--primary); }
+    </style>
+</head>
+
+<body>
+
+<div class="profile-card">
+    <header>
+        <h2>Account Settings</h2>
+        <p class="subtitle">Update your admin profile and credentials</p>
+    </header>
+
+    {% if error %}
+    <div class="alert alert-error">{{ error }}</div>
+    {% endif %}
+
+    {% if success %}
+    <div class="alert alert-success">{{ success }}</div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="name" value="{{ admin.name }}" placeholder="Admin Name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" value="{{ admin.email }}" placeholder="admin@legaspace.com" required>
+        </div>
+
+        <div class="section-divider">
+            <h3>🔐 Security</h3>
+            
+            <div class="form-group">
+                <label>Current Password</label>
+                <input type="password" name="old_password" placeholder="••••••••">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>New Password</label>
+                <input type="password" name="new_password" placeholder="Leave blank to keep current">
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Save Changes</button>
+        
+        <a href="/admin/dashboard/" class="back-home">&larr; Return to Dashboard</a>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Properties | Legaspace Admin</title>
+    <style>
+        :root {
+            --primary: #0d1b2a;
+            --secondary: #1b263b;
+            --accent: #fca311;
+            --bg: #f8f9fa;
+            --white: #ffffff;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --info: #3498db;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--primary);
+            padding: 40px 5%;
+        }
+
+        /* --- HEADER SECTION --- */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header-title h2 { font-size: 1.8rem; font-weight: 700; }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-home {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .back-home:hover {
+            color: var(--accent);
+        }
+
+        .add-btn {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .add-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 27, 42, 0.2);
+        }
+
+        /* --- TABLE CARD --- */
+        .table-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: #fdfdfd;
+            border-bottom: 2px solid #eee;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+        }
+
+        td {
+            padding: 18px 15px;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 0.95rem;
+            vertical-align: middle;
+        }
+
+        tr:hover { background: #fafafa; }
+
+        .prop-title {
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .prop-location {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        .price-tag {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* --- ACTION BUTTONS --- */
+        .actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .btn-action {
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .btn-view { background: #f0f4f8; color: var(--primary); }
+        .btn-edit { background: #fff8e6; color: #b7791f; }
+        .btn-leads { background: #e6f6ff; color: #2b6cb0; }
+        .btn-delete { background: #fff5f5; color: #c53030; }
+
+        .btn-action:hover {
+            filter: brightness(0.95);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 20px; }
+            .page-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .header-actions { width: 100%; justify-content: space-between; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-header">
+        <div class="header-title">
+            <h2>Property Inventory</h2>
+        </div>
+        <div class="header-actions">
+            <a href="/admin/dashboard/" class="back-home">&larr; Back to Home</a>
+            <a href="/admin/add-property/" class="add-btn">
+                <span>+</span> Add New Property
+            </a>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Property Details</th>
+                    <th>Price</th>
+                    <th style="text-align: right;">Management Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in properties %}
+                <tr>
+                    <td>
+                        <span class="prop-title">{{ p.title }}</span>
+                        <span class="prop-location">{{ p.location }}</span>
+                    </td>
+                    <td>
+                        <span class="price-tag">₹{{ p.price }}</span>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <a href="/admin/property/{{ p.id }}/" class="btn-action btn-view">View</a>
+                            <a href="/admin/property/edit/{{ p.id }}/" class="btn-action btn-edit">Edit</a>
+                            <a href="/admin/property/leads/{{ p.id }}/" class="btn-action btn-leads">Leads</a>
+                            <a href="/admin/property/delete/{{ p.id }}/" class="btn-action btn-delete" onclick="return confirm('Delete this property?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% if not properties %}
+                <tr>
+                    <td colspan="3" style="text-align: center; padding: 40px; color: #999;">
+                        No properties found. Click "Add New Property" to get started.
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
