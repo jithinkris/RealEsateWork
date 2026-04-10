@@ -64,7 +64,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
 
     ## for health
-    path('health/', views.health)
+    path('health/', health)
 
 
 ]
