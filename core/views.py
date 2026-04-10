@@ -554,3 +554,16 @@ def add_installment(request, sale_id):
         return redirect('sale_detail', sale_id=sale.id)
 
     return render(request, 'add_installment.html', {'sale': sale})
+
+
+
+
+
+#  health
+
+
+# views.py
+from django.http import HttpResponse
+
+def health(request):
+    return HttpResponse("OK")
