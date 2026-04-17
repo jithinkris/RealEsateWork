@@ -560,10 +560,14 @@ def add_installment(request, sale_id):
 
 
 #  health
-
-
-# views.py
 from django.http import HttpResponse
+from django.db import connection
 
 def health(request):
-    return HttpResponse("OK")
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            row = cursor.fetchone()
+        return HttpResponse(f"OK DB:{row[0]}")
+    except Exception as e:
+        return HttpResponse("DB ERROR", status=500)
