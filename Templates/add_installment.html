@@ -3,152 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Installment</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Add Installment | Legaspace Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #27ae60; /* Green for payments */
-            --bg-color: #f4f7f6;
-            --border-color: #dcdde1;
+            --primary: #0d1b2a;
+            --secondary: #1b263b;
+            --accent: #27ae60; /* Professional Green for money/payments */
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.2s ease;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 40px 20px;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .payment-card {
-            background: white;
+            background: var(--white);
             width: 100%;
-            max-width: 450px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 480px;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
             overflow: hidden;
+            border: 1px solid var(--border);
         }
 
         .card-header {
-            background-color: #f8fbf9;
-            padding: 25px;
-            border-bottom: 1px solid #edf2f0;
+            background-color: #f8fafc;
+            padding: 30px;
+            border-bottom: 1px solid var(--border);
             text-align: center;
         }
 
         h2 {
-            margin: 0;
-            font-size: 1.4rem;
-            color: var(--primary-color);
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
         }
 
         .property-tag {
             display: inline-block;
-            margin-top: 8px;
             font-size: 0.85rem;
-            color: #7f8c8d;
+            color: var(--text-muted);
             background: #fff;
-            padding: 4px 12px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
+            padding: 6px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            font-weight: 500;
+        }
+
+        .property-tag strong {
+            color: var(--primary);
         }
 
         .form-content {
-            padding: 30px;
+            padding: 35px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         label {
             display: block;
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 0.8rem;
+            font-weight: 700;
             margin-bottom: 8px;
-            color: #57606f;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .input-wrapper {
             position: relative;
         }
 
-        .input-wrapper span {
+        .input-wrapper .currency-symbol {
             position: absolute;
-            left: 12px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: #a4b0be;
-            font-weight: 500;
+            color: var(--text-muted);
+            font-weight: 600;
+            pointer-events: none;
         }
 
         input, select {
             width: 100%;
-            padding: 12px 15px;
-            padding-left: 30px; /* Space for ₹ symbol */
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             font-family: inherit;
-            font-size: 14px;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            color: var(--text-main);
+            background-color: #ffffff;
+            outline: none;
+        }
+
+        input {
+            padding-left: 35px; /* Space for ₹ */
         }
 
         select {
-            padding-left: 15px; /* Select doesn't need ₹ symbol */
+            cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a4b0be' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 10px center;
+            background-position: right 15px center;
             background-size: 16px;
         }
 
         input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.1);
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
         }
 
         button {
             width: 100%;
-            padding: 14px;
-            background-color: var(--accent-color);
+            padding: 16px;
+            background-color: var(--accent);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.3s ease;
-            margin-top: 10px;
+            box-shadow: 0 4px 6px -1px rgba(39, 174, 96, 0.2);
         }
 
         button:hover {
             background-color: #219150;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(39, 174, 96, 0.3);
         }
 
-        .btn-action {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: 8px;
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-back {
             text-decoration: none;
             text-align: center;
-            font-size: 0.95rem;
-            color: #2c3e50;
-            border: 1px solid #dcdde1;
-            margin-top: 20px;
-            transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid transparent;
         }
 
-        .btn-action:hover {
-            transform: translateY(-1px);
-            background-color: #f0f4f8;
+        .btn-back:hover {
+            color: var(--primary);
+            background: #f1f5f9;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .payment-card {
+                border-radius: 15px;
+            }
+            .form-content {
+                padding: 25px;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
@@ -167,22 +213,26 @@
             <div class="form-group">
                 <label for="amount">Payment Amount</label>
                 <div class="input-wrapper">
-                    <span>₹</span>
-                    <input type="number" name="amount" id="amount" placeholder="0.00" required>
+                    <span class="currency-symbol">₹</span>
+                    <input type="number" name="amount" id="amount" placeholder="0.00" step="0.01" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="payment_method">Payment Method</label>
-                <select name="payment_method" id="payment_method">
-                    <option value="cash">Cash</option>
-                    <option value="upi">UPI / QR Scan</option>
-                    <option value="bank">Bank Transfer (NEFT/IMPS)</option>
+                <select name="payment_method" id="payment_method" required>
+                    <option value="" disabled selected>Select method...</option>
+                    <option value="cash">💵 Cash Payment</option>
+                    <option value="upi">📱 UPI / QR Scan</option>
+                    <option value="bank">🏦 Bank Transfer (NEFT/IMPS)</option>
+                    <option value="cheque">✍️ Cheque</option>
                 </select>
             </div>
 
-            <button type="submit">Record Payment</button>
-            <a href="javascript:history.back()" class="btn-action">Cancel and go back</a>
+            <div class="actions">
+                <button type="submit">Record Payment</button>
+                <a href="javascript:history.back()" class="btn-back">Cancel and go back</a>
+            </div>
         </form>
     </div>
 </div>

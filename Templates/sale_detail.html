@@ -3,205 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sale Details</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Sale Details | Legaspace Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-muted: #7f8c8d;
-            --border-color: #eee;
+            --primary: #0d1b2a;
+            --secondary: #1b263b;
+            --accent: #3498db;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.2s ease;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--primary-color);
-            margin: 0;
-            padding: 40px 20px;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            padding: 30px 20px;
             display: flex;
             justify-content: center;
+            min-height: 100vh;
         }
 
-        .detail-card {
+        .container {
             width: 100%;
-            max-width: 800px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            overflow: hidden;
+            max-width: 900px;
         }
 
-        .header {
-            background-color: #fff;
-            padding: 30px 40px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        h2 { margin: 0; font-weight: 600; color: var(--primary-color); }
-        h3 { margin-top: 0; font-weight: 500; font-size: 1.1rem; color: var(--text-muted); }
-
-        /* Property Overview Grid */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 30px 40px;
-            background-color: #fafbfc;
-        }
-
-        .info-item {
+        /* --- PAGE ACTIONS --- */
+        .page-actions {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
         }
 
-        .info-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .btn-back {
+            text-decoration: none;
             color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover { color: var(--primary); }
+
+        .btn-add {
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-add:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(13, 27, 42, 0.2);
+        }
+
+        /* --- DETAIL CARD --- */
+        .detail-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .card-header {
+            padding: 35px;
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .card-header h2 { 
+            font-size: 1.75rem; 
+            font-weight: 800; 
+            color: var(--primary);
+            letter-spacing: -0.5px;
             margin-bottom: 5px;
         }
 
-        .info-value {
-            font-size: 1rem;
+        .card-header p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
             font-weight: 500;
         }
 
-        .info-value.highlight {
-            color: #e74c3c; /* Red for remaining amount */
-            font-weight: 600;
+        /* Financial Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
         }
 
-        /* Table Styling */
+        .info-item {
+            padding: 25px 35px;
+            border-right: 1px solid var(--border);
+        }
+
+        .info-item:last-child { border-right: none; }
+
+        .info-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .balance-due { color: var(--danger); }
+        .balance-paid { color: var(--success); }
+
+        /* Table Section */
         .table-section {
-            padding: 30px 40px 40px;
+            padding: 35px;
+        }
+
+        .table-section h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-section h3::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            min-width: 500px;
         }
 
         th {
             text-align: left;
-            font-size: 0.8rem;
-            color: var(--text-muted);
+            background: #f8fafc;
+            padding: 14px 20px;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            padding: 12px 15px;
-            border-bottom: 2px solid var(--border-color);
+            font-weight: 700;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
         }
 
         td {
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
             font-size: 0.95rem;
         }
 
+        tr:last-child td { border-bottom: none; }
+
         .empty-state {
             text-align: center;
+            padding: 40px;
             color: var(--text-muted);
-            padding: 30px;
-            font-style: italic;
-        }
-
-        .page-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .btn-action {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 11px 18px;
-            border-radius: 999px;
-            text-decoration: none;
-            color: var(--accent-color);
-            border: 1px solid rgba(52, 152, 219, 0.25);
             font-size: 0.9rem;
-            font-weight: 500;
-            transition: transform 0.2s ease, background 0.2s ease;
         }
 
-        .btn-action.primary {
-            background-color: var(--accent-color);
-            color: white;
-            border-color: transparent;
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr 1fr; }
+            .info-item { border-bottom: 1px solid var(--border); }
+            .info-item:nth-child(even) { border-right: none; }
+            .card-header, .table-section { padding: 25px; }
+            .page-actions { flex-direction: column; align-items: flex-start; }
+            .btn-add { width: 100%; justify-content: center; }
         }
 
-        .btn-action:hover {
-            transform: translateY(-1px);
-            background-color: rgba(52, 152, 219, 0.08);
-        }
-
-        @media (max-width: 600px) {
-            .info-grid { grid-template-columns: 1fr; padding: 20px; }
-            .table-section { padding: 20px; }
+        @media (max-width: 480px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .info-item { border-right: none; }
         }
     </style>
 </head>
 <body>
 
-<div style="width: 100%; max-width: 800px;">
+<div class="container">
     <div class="page-actions">
-        <a href="javascript:history.back()" class="btn-action">← Back to Sales List</a>
-        <a href="/admin/add-installment/{{ sale.id }}/" class="btn-action primary">+ Add Installment</a>
+        <a href="javascript:history.back()" class="btn-back">← Back to Sales List</a>
+        <a href="/admin/add-installment/{{ sale.id }}/" class="btn-add">
+            <span>+</span> Record New Installment
+        </a>
     </div>
+
     <div class="detail-card">
-        <div class="header">
+        <div class="card-header">
             <h2>{{ sale.property.title }}</h2>
-            <p style="margin: 5px 0 0; color: var(--text-muted);">Sale Overview</p>
+            <p>Transaction ID: #SALE-{{ sale.id }}</p>
         </div>
 
         <div class="info-grid">
             <div class="info-item">
-                <span class="info-label">Buyer</span>
-                <span class="info-value">{% if sale.buyer %}{{ sale.buyer.name }}{% else %}{{ sale.buyer_name }}{% endif %}</span>
+                <span class="info-label">Primary Buyer</span>
+                <span class="info-value">
+                    {% if sale.buyer %}{{ sale.buyer.name }}{% else %}{{ sale.buyer_name }}{% endif %}
+                </span>
             </div>
             <div class="info-item">
-                <span class="info-label">Total Price</span>
+                <span class="info-label">Deal Value</span>
                 <span class="info-value">₹ {{ sale.total_price }}</span>
             </div>
             <div class="info-item">
-                <span class="info-label">Advance Paid</span>
-                <span class="info-value" style="color: #27ae60;">₹ {{ sale.advance_paid }}</span>
+                <span class="info-label">Paid to Date</span>
+                <span class="info-value balance-paid">₹ {{ sale.advance_paid }}</span>
             </div>
             <div class="info-item">
-                <span class="info-label">Remaining Balance</span>
-                <span class="info-value highlight">₹ {{ sale.remaining_amount }}</span>
+                <span class="info-label">Outstanding</span>
+                <span class="info-value balance-due">₹ {{ sale.remaining_amount }}</span>
             </div>
         </div>
 
         <div class="table-section">
-            <h3>Payment Installments</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Amount</th>
-                        <th>Method</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for i in installments %}
-                    <tr>
-                        <td style="font-weight: 600;">₹ {{ i.amount }}</td>
-                        <td>{{ i.payment_method }}</td>
-                        <td>{{ i.payment_date }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="3" class="empty-state">No payment records found.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <h3>Installment History</h3>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                            <th>Transaction Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in installments %}
+                        <tr>
+                            <td style="font-weight: 700; color: var(--primary);">₹ {{ i.amount }}</td>
+                            <td>
+                                <span style="background: #f1f5f9; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; text-transform: capitalize;">
+                                    {{ i.payment_method }}
+                                </span>
+                            </td>
+                            <td style="color: var(--text-muted); font-size: 0.85rem;">{{ i.payment_date }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="empty-state">
+                                <div style="font-size: 1.5rem; margin-bottom: 10px;">📄</div>
+                                No installments have been recorded for this sale yet.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

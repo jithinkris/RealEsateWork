@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Property | Legaspace Admin</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #0d1b2a;
             --secondary: #1b263b;
             --accent: #fca311;
-            --bg: #f4f7f6;
+            --bg: #f8fafc;
             --white: #ffffff;
-            --border: #dcdfe6;
-            --danger: #e74c3c;
+            --border: #e2e8f0;
+            --danger: #ef4444;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
         }
 
         * {
@@ -24,57 +27,69 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
-            color: var(--primary);
-            padding: 40px 20px;
+            color: var(--text-main);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
         }
 
         .container {
+            width: 100%;
             max-width: 900px;
-            margin: 0 auto;
             background: var(--white);
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+            margin: auto;
         }
 
         header {
-            border-bottom: 2px solid var(--bg);
-            margin-bottom: 30px;
-            padding-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
         }
 
-        h2 { font-size: 1.8rem; color: var(--primary); }
+        h2 { 
+            font-size: 1.75rem; 
+            font-weight: 700; 
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
 
         .back-link {
             text-decoration: none;
-            color: #666;
+            color: var(--text-muted);
             font-size: 0.9rem;
             font-weight: 600;
         }
 
+        .back-link:hover { color: var(--accent); }
+
         /* --- FORM GRID --- */
         .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
         }
 
         .full-width { grid-column: span 2; }
 
-        .form-group { margin-bottom: 20px; }
+        .form-group { position: relative; }
 
         label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             margin-bottom: 8px;
             color: var(--secondary);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         input[type="text"],
@@ -82,18 +97,19 @@
         select,
         textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 16px;
             border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
             outline: none;
-            background: #fafafa;
+            background: #ffffff;
+            color: var(--text-main);
         }
 
         input:focus, select:focus, textarea:focus {
             border-color: var(--accent);
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.1);
+            box-shadow: 0 0 0 4px rgba(252, 163, 17, 0.1);
         }
 
         textarea { resize: vertical; min-height: 120px; }
@@ -101,20 +117,25 @@
         /* --- AMENITIES --- */
         .checkbox-group {
             display: flex;
-            gap: 30px;
-            background: #f8f9fa;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: #f1f5f9;
             padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
         }
 
         .checkbox-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
         }
 
         input[type="checkbox"] {
@@ -126,23 +147,26 @@
         /* --- IMAGE MANAGEMENT --- */
         .image-manager {
             margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #f0f0f0;
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 16px;
+            border: 1px solid var(--border);
         }
 
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 15px;
-            margin: 15px 0;
+            margin-top: 15px;
         }
 
         .image-thumb {
             position: relative;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
-            border: 1px solid #ddd;
-            height: 100px;
+            aspect-ratio: 1/1;
+            border: 2px solid white;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
 
         .image-thumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -153,43 +177,51 @@
             background: var(--danger);
             color: white;
             padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
+            border-radius: 6px;
+            font-size: 0.65rem;
             text-decoration: none;
-            font-weight: bold;
-            opacity: 0.9;
+            font-weight: 800;
+            text-transform: uppercase;
         }
 
         .file-upload {
             border: 2px dashed var(--border);
-            padding: 20px;
+            padding: 30px;
             text-align: center;
-            border-radius: 8px;
-            background: #fdfdfd;
-            margin-top: 10px;
+            border-radius: 12px;
+            background: white;
+            margin-top: 20px;
+            cursor: pointer;
         }
+
+        .file-upload:hover { border-color: var(--accent); }
 
         .submit-btn {
             width: 100%;
-            padding: 16px;
+            padding: 18px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
+            border-radius: 12px;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
             margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .submit-btn:hover {
             background: var(--secondary);
             transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(13, 27, 42, 0.2);
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .container { padding: 25px; }
             .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
+            header { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
     </style>
 </head>
@@ -199,7 +231,7 @@
 <div class="container">
     <header>
         <h2>Edit Property</h2>
-        <a href="/admin/properties/" class="back-link">&larr; Cancel & Return</a>
+        <a href="/admin/properties/" class="back-link">← Cancel & Return</a>
     </header>
 
     <form method="POST" enctype="multipart/form-data">
@@ -223,7 +255,7 @@
 
             <div class="form-group">
                 <label>Price (₹)</label>
-                <input type="number" name="price" value="{{ property.price }}" >
+                <input type="number" name="price" value="{{ property.price }}">
             </div>
 
             <div class="form-group full-width">
@@ -261,7 +293,7 @@
             </div>
         </div>
 
-        <label>Amenities</label>
+        <label style="margin-top: 20px; display: block;">Amenities</label>
         <div class="checkbox-group">
             <label class="checkbox-item">
                 <input type="checkbox" name="parking" {% if property.parking %}checked{% endif %}> Parking
@@ -272,25 +304,26 @@
         </div>
 
         <div class="image-manager">
-            <label>Existing Property Photos</label>
+            <label>Manage Property Photos</label>
             <div class="image-grid">
                 {% for img in property.images.all %}
                 <div class="image-thumb">
                     <img src="{{ img.image.url }}">
-                    <a href="/admin/delete-image/{{ img.id }}/" class="delete-overlay" onclick="return confirm('Remove this image?')">Remove</a>
+                    <a href="/admin/delete-image/{{ img.id }}/" class="delete-overlay" onclick="return confirm('Permanently remove this photo?')">Remove</a>
                 </div>
                 {% empty %}
-                <p style="font-size: 0.85rem; color: #999;">No images uploaded.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted); grid-column: 1/-1;">No images found for this property.</p>
                 {% endfor %}
             </div>
 
-            <label style="margin-top: 20px;">Upload New Photos</label>
+            <label style="margin-top: 25px; display: block;">Add More Photos</label>
             <div class="file-upload">
-                <input type="file" name="images" multiple>
+                <input type="file" name="images" multiple id="file-input">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Click or drag files here to upload</p>
             </div>
         </div>
 
-        <button type="submit" class="submit-btn">Save Changes</button>
+        <button type="submit" class="submit-btn">Update Property</button>
     </form>
 </div>
 

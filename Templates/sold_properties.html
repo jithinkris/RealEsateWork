@@ -3,173 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sold Properties</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Sold Properties | Legaspace Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --success-color: #27ae60;
-            --bg-color: #f4f7f6;
-            --text-color: #333;
+            --primary: #0d1b2a;
+            --secondary: #1b263b;
+            --accent: #3498db;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.2s ease;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 40px 20px;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            padding: 30px 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .container {
             width: 100%;
-            max-width: 1000px;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 1100px;
         }
 
+        /* --- PAGE ACTIONS --- */
         .page-actions {
-            width: 100%;
-            max-width: 1000px;
             display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
+            justify-content: space-between;
             align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .btn-action {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.35rem;
-            padding: 11px 18px;
-            border-radius: 999px;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
         }
 
-        .btn-action.primary {
-            background-color: var(--accent-color);
+        .btn-back {
+            color: var(--text-muted);
+            background: var(--white);
+            border: 1px solid var(--border);
+        }
+
+        .btn-back:hover {
+            color: var(--primary);
+            background: #f1f5f9;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
             color: white;
+            box-shadow: 0 4px 6px -1px rgba(13, 27, 42, 0.1);
         }
 
-        .btn-action.secondary {
-            background-color: white;
-            color: var(--accent-color);
-            border: 1px solid rgba(52, 152, 219, 0.25);
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(13, 27, 42, 0.2);
         }
 
-        .btn-action:hover {
-            transform: translateY(-1px);
+        /* --- DATA CARD --- */
+        .table-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
         }
 
         h2 {
-            color: var(--primary-color);
-            margin-bottom: 25px;
-            font-weight: 600;
-            border-left: 5px solid var(--accent-color);
-            padding-left: 15px;
+            font-size: 1.6rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin: 25px 25px 30px;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        /* Table Responsive Wrapper */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            min-width: 850px; /* Ensures table doesn't squish on mobile */
         }
 
         th {
-            background-color: #f8f9fa;
-            color: #7f8c8d;
+            background-color: #f8fafc;
+            color: var(--text-muted);
             text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 1px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
             text-align: left;
-            padding: 15px;
-            border-bottom: 2px solid #eee;
+            padding: 16px 20px;
+            border-bottom: 2px solid var(--border);
         }
 
         td {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            font-size: 14px;
+            padding: 20px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
         }
 
-        tr:hover {
-            background-color: #fcfcfc;
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #fcfdfe; }
+
+        .price-bold {
+            font-weight: 700;
+            color: var(--primary);
         }
 
-        .price {
+        .remaining-amount {
+            color: var(--danger);
             font-weight: 600;
-            color: var(--primary-color);
+            background: #fef2f2;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
         }
 
-        .remaining {
-            color: #e74c3c;
-            font-weight: 500;
+        .remaining-cleared {
+            color: var(--success);
+            background: #ecfdf5;
         }
 
         .btn-view {
             text-decoration: none;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-size: 13px;
-            transition: background 0.3s ease;
+            background-color: #f1f5f9;
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-block;
         }
 
         .btn-view:hover {
-            background-color: #2980b9;
+            background-color: var(--primary);
+            color: white;
         }
 
-        /* Responsive design for smaller screens */
-        @media (max-width: 600px) {
-            .container { padding: 15px; }
-            th, td { padding: 10px; font-size: 12px; }
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .page-actions { flex-direction: column; align-items: stretch; }
+            .btn-action { justify-content: center; }
+            .table-card { padding: 5px; }
+            h2 { margin: 20px 15px; font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
-<div class="page-actions">
-    <a href="/admin/dashboard/" class="btn-action secondary">← Back to Dashboard</a>
-    <a href="/admin/add-sale/" class="btn-action primary">+ Add Sale</a>
-</div>
-<div class="container">
-    <h2>Sold Properties</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Property</th>
-                <th>Buyer</th>
-                <th>Total Price</th>
-                <th>Remaining</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for s in sales %}
-            <tr>
-                <td style="font-weight: 500;">{{ s.property.title }}</td>
-                <td>{% if s.buyer %}{{ s.buyer.name }}{% else %}{{ s.buyer_name }}{% endif %}</td>
-                <td class="price">₹ {{ s.total_price }}</td>
-                <td class="remaining">₹ {{ s.remaining_amount }}</td>
-                <td>
-                    <a href="{% url 'sale_detail' s.id %}" class="btn-view">View</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+    <div class="container">
+        <div class="page-actions">
+            <a href="/admin/dashboard/" class="btn-action btn-back">← Back to Dashboard</a>
+            <a href="/admin/add-sale/" class="btn-action btn-primary">+ Record New Sale</a>
+        </div>
+
+        <div class="table-card">
+            <h2>Sold Properties</h2>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Buyer</th>
+                            <th>Sale Value</th>
+                            <th>Pending Balance</th>
+                            <th style="text-align: right;">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in sales %}
+                        <tr>
+                            <td>
+                                <div style="font-weight: 700; color: var(--primary);">{{ s.property.title }}</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">ID: #SALE-{{ s.id }}</div>
+                            </td>
+                            <td>
+                                <div style="font-weight: 600;">
+                                    {% if s.buyer %}{{ s.buyer.name }}{% else %}{{ s.buyer_name }}{% endif %}
+                                </div>
+                            </td>
+                            <td class="price-bold">₹ {{ s.total_price }}</td>
+                            <td>
+                                <span class="remaining-amount {% if s.remaining_amount == 0 %}remaining-cleared{% endif %}">
+                                    {% if s.remaining_amount == 0 %}Cleared{% else %}₹ {{ s.remaining_amount }}{% endif %}
+                                </span>
+                            </td>
+                            <td style="text-align: right;">
+                                <a href="{% url 'sale_detail' s.id %}" class="btn-view">View File</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 60px; color: var(--text-muted);">
+                                <div style="font-size: 2rem; margin-bottom: 10px;">📈</div>
+                                No properties have been recorded as sold yet.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

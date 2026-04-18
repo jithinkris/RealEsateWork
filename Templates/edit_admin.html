@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile | Legaspace Admin</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #0d1b2a;
             --secondary: #1b263b;
             --accent: #fca311;
-            --bg: #f4f7f6;
+            --bg: #f8fafc;
             --white: #ffffff;
-            --border: #dcdfe6;
-            --danger: #e74c3c;
-            --success: #2ecc71;
+            --border: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
         }
 
         * {
@@ -25,9 +28,9 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
-            color: var(--primary);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -40,32 +43,51 @@
             width: 100%;
             max-width: 500px;
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border);
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
-        h2 { font-size: 1.6rem; color: var(--primary); margin-bottom: 5px; }
-        .subtitle { color: #666; font-size: 0.9rem; }
+        h2 { 
+            font-size: 1.75rem; 
+            font-weight: 700; 
+            color: var(--primary); 
+            letter-spacing: -0.5px;
+            margin-bottom: 8px; 
+        }
+
+        .subtitle { 
+            color: var(--text-muted); 
+            font-size: 0.95rem; 
+        }
 
         /* --- ALERTS --- */
         .alert {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 25px;
             font-size: 0.9rem;
             text-align: center;
             font-weight: 600;
         }
-        .alert-error { background: #fff5f5; color: var(--danger); border: 1px solid #fed7d7; }
-        .alert-success { background: #f0fff4; color: var(--success); border: 1px solid #c6f6d5; }
+        .alert-error { 
+            background: #fef2f2; 
+            color: var(--danger); 
+            border: 1px solid #fee2e2; 
+        }
+        .alert-success { 
+            background: #ecfdf5; 
+            color: var(--success); 
+            border: 1px solid #d1fae5; 
+        }
 
         /* --- FORM --- */
-        .form-group { margin-bottom: 20px; }
+        .form-group { margin-bottom: 22px; }
 
         label {
             display: block;
@@ -79,67 +101,87 @@
 
         input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 16px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1rem;
+            font-family: inherit;
             outline: none;
-            background: #fafafa;
+            background: #ffffff;
+            color: var(--text-main);
         }
 
         input:focus {
             border-color: var(--accent);
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.1);
+            box-shadow: 0 0 0 4px rgba(252, 163, 17, 0.1);
         }
 
+        /* Security Box */
         .section-divider {
             margin: 30px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border: 1px solid #eee;
+            padding: 25px;
+            background: #f1f5f9;
+            border-radius: 16px;
+            border: 1px solid var(--border);
         }
 
         .section-divider h3 {
-            font-size: 1rem;
-            margin-bottom: 15px;
-            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 18px;
+            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .submit-btn {
             width: 100%;
-            padding: 16px;
+            padding: 18px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
+            border-radius: 12px;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
             margin-top: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .submit-btn:hover {
             background: var(--secondary);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(13, 27, 42, 0.2);
+            box-shadow: 0 10px 15px -3px rgba(13, 27, 42, 0.2);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
         }
 
         .back-home {
             display: block;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 25px;
             text-decoration: none;
-            color: #888;
-            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
             font-weight: 600;
         }
 
         .back-home:hover { color: var(--primary); }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .profile-card {
+                padding: 25px;
+                border-radius: 15px;
+            }
+            h2 { font-size: 1.5rem; }
+            .section-divider { padding: 15px; }
+        }
     </style>
 </head>
 
@@ -148,15 +190,15 @@
 <div class="profile-card">
     <header>
         <h2>Account Settings</h2>
-        <p class="subtitle">Update your admin profile and credentials</p>
+        <p class="subtitle">Update your profile and credentials</p>
     </header>
 
     {% if error %}
-    <div class="alert alert-error">{{ error }}</div>
+    <div class="alert alert-error">⚠️ {{ error }}</div>
     {% endif %}
 
     {% if success %}
-    <div class="alert alert-success">{{ success }}</div>
+    <div class="alert alert-success">✅ {{ success }}</div>
     {% endif %}
 
     <form method="POST">
@@ -173,11 +215,11 @@
         </div>
 
         <div class="section-divider">
-            <h3>🔐 Security</h3>
+            <h3>🔐 Security Update</h3>
             
             <div class="form-group">
                 <label>Current Password</label>
-                <input type="password" name="old_password" placeholder="••••••••">
+                <input type="password" name="old_password" placeholder="Enter current password">
             </div>
 
             <div class="form-group" style="margin-bottom: 0;">
@@ -186,9 +228,9 @@
             </div>
         </div>
 
-        <button type="submit" class="submit-btn">Save Changes</button>
+        <button type="submit" class="submit-btn">Save Profile Changes</button>
         
-        <a href="/admin/dashboard/" class="back-home">&larr; Return to Dashboard</a>
+        <a href="/admin/dashboard/" class="back-home">← Return to Dashboard</a>
     </form>
 </div>
 
